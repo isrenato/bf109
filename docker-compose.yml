@@ -1,0 +1,19 @@
+version: "3.1"
+
+services:
+  bf109-nginx:
+    container_name: bf109-nginx
+    build:
+      dockerfile: docker/nginx/Dockerfile
+    environment:
+      PHP_HOST: bf109-fpm
+
+  bf109-fpm:
+    container_name: bf109-fpm
+    build:
+      context: .
+      dockerfile: docker/php-fpm/Dockerfile
+
+  bf109-db:
+    container_name: bf109-db
+    image: percona:5.7

@@ -1,0 +1,38 @@
+version: '1.0'
+
+services:
+  bf109-nginx:
+    networks:
+      - bf109-internal
+    ports:
+      - 127.0.0.1:80:80
+
+  bf109-fpm:
+    volumes:
+      - ./:/app
+    networks:
+      - bf109-internal
+    environment:
+      XDEBUG_CONFIG: client_host=docker.for.mac.localhost remote_enable=1 client_port=9090
+      XDEBUG_MODE: debug
+      PHP_IDE_CONFIG: serverName=localhost
+      DATABASE_URL: 'mysql://bf:bf@bf109-db/bf109'
+
+  bf109-db:
+    ports:
+      - 3304:3306
+    volumes:
+      - bf109-db-data:/var/lib/mysql
+    networks:
+      - bf109-internal
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'bf109'
+      MYSQL_USER: 'bf109'
+      MYSQL_PASSWORD: 'bf109'
+
+networks:
+  bf109-internal: ~
+
+volumes:
+  bf109-db-data: ~
