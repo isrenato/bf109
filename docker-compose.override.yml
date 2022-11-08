@@ -1,38 +1,43 @@
-version: '1.0'
+version: '3'
 
 services:
-  bf109-nginx:
+  inst-nginx:
     networks:
-      - bf109-internal
+      - inst-internal
     ports:
-      - 127.0.0.1:80:80
-
-  bf109-fpm:
+      - 80:80
     volumes:
-      - ./:/app
+      - ./:/var/www/html/
+      - ./docker/server-logs:/var/log/nginx
+
+  inst-fpm:
     networks:
-      - bf109-internal
+      - inst-internal
     environment:
-      XDEBUG_CONFIG: client_host=docker.for.mac.localhost remote_enable=1 client_port=9090
+      XDEBUG_CONFIG: client_host=docker.for.mac.localhost remote_enable=1 client_port=9000
       XDEBUG_MODE: debug
       PHP_IDE_CONFIG: serverName=localhost
-      DATABASE_URL: 'mysql://bf:bf@bf109-db/bf109'
+      DATABASE_URL: 'mysql://inst:inst@inst-db/inst'
+    volumes:
+      - ./:/var/www/html/
+      - ./docker/server-logs:/var/log/nginx
 
-  bf109-db:
+  inst-db:
     ports:
       - 3304:3306
     volumes:
-      - bf109-db-data:/var/lib/mysql
+      - inst-db-data:/var/lib/mysql
     networks:
-      - bf109-internal
+      - inst-internal
     environment:
       MYSQL_ROOT_PASSWORD: 'root'
-      MYSQL_DATABASE: 'bf109'
-      MYSQL_USER: 'bf109'
-      MYSQL_PASSWORD: 'bf109'
+      MYSQL_DATABASE: 'inst'
+      MYSQL_USER: 'inst'
+      MYSQL_PASSWORD: 'inst'
 
 networks:
-  bf109-internal: ~
+  inst-internal:
+    driver: bridge
 
 volumes:
-  bf109-db-data: ~
+  inst-db-data: ~

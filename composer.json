@@ -1,5 +1,5 @@
 {
-    "name": "chris/bf109",
+    "name": "chris/inst",
     "description": "Basic APP",
     "license": "proprietary",
     "type": "project",
@@ -12,7 +12,11 @@
         "symfony/dotenv": "^6.1",
         "symfony/yaml": "^6.1",
         "symfony/flex": "^2.2",
-        "symfony/runtime": "6.1.*"
+        "symfony/runtime": "6.1.*",
+        "doctrine/orm": "^2.13",
+        "doctrine/doctrine-bundle": "^2.7",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "symfony/proxy-manager-bridge": "6.1.*"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.13",
@@ -21,7 +25,8 @@
         "phpunit/phpunit": "^9.5",
         "phpstan/phpstan": "^1.9",
         "phing/phing": "^2.17",
-        "friendsofphp/php-cs-fixer": "^3.13"
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "symfony/maker-bundle": "^1.47"
     },
     "replace": {
         "paragonie/random_compat": "2.*",
